@@ -1,6 +1,15 @@
 import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
+import sqlite3 as lite
+
+con = lite.connect('./mxm_dataset.db')
+cur = con.cursor()
+QUERY = "SELECT * FROM lyrics" 
+cur.execute(QUERY)
+
+for row in cur.fetchall():
+    print(row)
 
 example_sent = "This is a sample sentence, showing off the stop words filtration." # replace with data
 import string
