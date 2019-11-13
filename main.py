@@ -5,6 +5,12 @@ QUERY = "SELECT * FROM lyrics"
 cur.execute(QUERY)
 
 
-# replace with clean_date() or something
-for row in cur.fetchall():
-    print(row)
+from sklearn.feature_extraction.text import TfidfVectorizer
+i = 0
+sentences = dict()
+for track_id, mxm_tid, word, count, is_test in cur.fetchall():
+    if is_test == 0:
+        sentences[track_id] = sentences.get(track_id, "") + (word + " ")*count + " "
+
+sentences = list(sentences.values())
+tf_idf = TfidfVectorizer().fit_transform(sentences)
